@@ -1,1 +1,3 @@
-# weather-camera-th
+# Weather Camera Monitoring
+
+Salvatore Ventre
