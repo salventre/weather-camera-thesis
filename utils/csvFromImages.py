@@ -3,7 +3,8 @@ import pathlib
 import csv
 
 CODE_PATH = str(pathlib.Path(__file__).parent.absolute())
-CSV_PATH = CSV_PATH = os.path.join(CODE_PATH,'CSVfromImages.csv')
+HOME_PATH = os.path.abspath('../weather-camera-thesis/')
+CSV_PATH = os.path.join(HOME_PATH,'data/CSVfromImages.csv')
 DATASET_PATH = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '../..', 'Dataset'))
 
 os.chdir(DATASET_PATH)

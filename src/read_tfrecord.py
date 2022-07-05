@@ -11,8 +11,9 @@ import pandas as pd
 
 
 CODE_PATH = str(pathlib.Path(__file__).parent.absolute())
+HOME_PATH = os.path.abspath('../weather-camera-thesis/')
+TFRECORD_PATH = os.path.join(HOME_PATH,'data/tfrecord')
 DATASET_PATH = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '../..', 'Dataset'))
-TFRECORD_PATH = os.path.join(CODE_PATH,'tfrecord')
 
 tfrecord_file_name = "tfrecordexample.record"
 TFRECORD_FILE_PATH = os.path.join(TFRECORD_PATH, tfrecord_file_name)
@@ -93,7 +94,7 @@ def read_tfrecord(show):
             done=True
     
     df = pd.DataFrame(stats, index=[0])
-    df.to_csv(CODE_PATH + "./stats.csv", index=False)
+    df.to_csv(HOME_PATH + "/data/stats.csv", index=False)
 
 
 read_tfrecord(False)

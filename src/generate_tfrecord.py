@@ -6,13 +6,9 @@ import cv2
 from classmap import category_index_classifier
 
 CODE_PATH = str(pathlib.Path(__file__).parent.absolute())
+HOME_PATH = os.path.abspath('../weather-camera-thesis/')
 DATASET_PATH = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '../..', 'Dataset'))
-TFRECORD_PATH = os.path.join(CODE_PATH,'tfrecord')
-
-MAX_VALUE = 28169
-#print(CODE_PATH)
-#print(DATASET_PATH)
-#print(TFRECORD_PATH)
+TFRECORD_PATH = os.path.join(HOME_PATH,'data/tfrecord')
 
 def class_text_to_int(row_label):
     return category_index_classifier[row_label]
