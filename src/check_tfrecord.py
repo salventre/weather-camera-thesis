@@ -97,4 +97,4 @@ def read_tfrecord(show):
     df.to_csv(HOME_PATH + "/data/stats.csv", index=False)
 
 
-read_tfrecord(False)
+read_tfrecord(True)
