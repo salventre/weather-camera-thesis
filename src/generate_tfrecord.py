@@ -33,6 +33,7 @@ def create_example(image, image_path, label):
 
 def write_tfrecord(writer, image_path, label):
     image = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
+    #print(image_path)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     example = create_example(image, image_path, label)
     writer.write(example.SerializeToString())

@@ -4,7 +4,7 @@ import csv
 
 CODE_PATH = str(pathlib.Path(__file__).parent.absolute())
 HOME_PATH = os.path.abspath('../weather-camera-thesis/')
-CSV_PATH = os.path.join(HOME_PATH,'data/CSVfromImages.csv')
+CSV_PATH = os.path.join(HOME_PATH,'data/dataset_annotation.csv')
 DATASET_PATH = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '../..', 'Dataset'))
 
 os.chdir(DATASET_PATH)
