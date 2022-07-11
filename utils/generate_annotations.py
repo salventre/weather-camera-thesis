@@ -14,7 +14,7 @@ with open(CSV_PATH, 'w', newline='') as file:
     fieldnames = ['imgPath', 'roadCondition']
     writer = csv.DictWriter(file, fieldnames=fieldnames)
 
-    writer.writeheader()
+    #writer.writeheader()
 
     for d in dirs:
         if os.path.isdir(d):
