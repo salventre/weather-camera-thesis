@@ -76,7 +76,7 @@ def train(args:argparse.Namespace):
     train_ds = train_ds.prefetch(buffer_size=32)
     val_ds = val_ds.prefetch(buffer_size=32)
 
-    # callbacks
+    # callbacks --> validation LOSS <--
     filepath = 'model-epoch_{epoch:02d}.hdf5'
     checkpoint_cb = tf.keras.callbacks.ModelCheckpoint(os.path.join(args.checkpoint_path, filepath), save_weights_only=True, verbose=1, save_best_only=True)
     early_stopping_cb = tf.keras.callbacks.EarlyStopping(patience=10,verbose=1,monitor='val_categorical_accuracy',mode='max')

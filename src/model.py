@@ -33,7 +33,7 @@ def build_model(freeze:bool=None)->tf.keras.Model:
                 if not isinstance(layer, layers.BatchNormalization):
                     layer.trainable = True
     x = layers.GlobalAveragePooling2D()(base_model.output)
-    x = layers.Dropout(0.2)(x)
+    x = layers.Dropout(0.2)(x) #DA RIMUOVERE INIZIALMENTE
     model = layers.Dense(N_CLASSES, 'softmax')(x)
     final_model = tf.keras.Model(inputs=base_model.input, outputs=model)
     #print(final_model.summary())

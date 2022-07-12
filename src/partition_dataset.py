@@ -120,11 +120,15 @@ def move_images(val_filenames:list, train_filenames:list, dest:str):
 
     print("VAL")
     for f in tqdm(val_filenames):
-        shutil.copy(f[0], os.path.join(test_dir, f[1]))
+        #shutil.copy(f[0], os.path.join(test_dir, f[1]))
+        img = f[0].rsplit('/', 1)
+        os.symlink(f[0], test_dir+"/"+f[1]+"/"+str(img[-1]))
     
     print("TRAIN")
     for f in tqdm(train_filenames):
-        shutil.copy(f[0], os.path.join(train_dir, f[1]))
+        #shutil.copy(f[0], os.path.join(train_dir, f[1]))
+        img = f[0].rsplit('/', 1)
+        os.symlink(f[0], train_dir+"/"+f[1]+"/"+str(img[-1]))
 
 
 if __name__ == '__main__':
@@ -145,5 +149,5 @@ if __name__ == '__main__':
         val_filenames, train_filenames = recover_filenames(folder)
         print("Split recovered !")
 
-    print("Moving images...")
+    print("Moving symbolic links-image...")
     move_images(val_filenames, train_filenames, NEW_DATASET_PATH)
