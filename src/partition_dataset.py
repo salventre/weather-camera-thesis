@@ -37,14 +37,14 @@ def split(ratio, data, folder_info):
     print("Numero di annotation all'interno del csv: ", len(data))
     num_images = len(data)
     num_test_images = math.ceil(ratio*num_images)
-    print("Train: {}, Val: {}".format(num_images-num_test_images, num_test_images))
+    print("Train: {}, Test: {}".format(num_images-num_test_images, num_test_images))
 
     classes = ["dry", "wet", "snow", "fog"]
     counter = {c:0 for c in classes}
     done = False
 
     while not done:
-        print("VAL")
+        print("TEST")
         images_copy = deepcopy(data)
         for k in list(counter.keys()): counter[k]=0 # clear dict
         filenames = []
@@ -56,7 +56,7 @@ def split(ratio, data, folder_info):
             counter[c] +=1
             images_copy.remove(filename)
         done = check_ds_distribution(counter)
-        print("VAL counter: ", counter)
+        print("TEST counter: ", counter)
 
         # if distribution is respected, process remaining images-annotations for training set
         if done:
@@ -70,7 +70,7 @@ def split(ratio, data, folder_info):
             print("TRAIN counter: ", counter)
     
     print("Split done!")
-    print_filenames(os.path.join(folder_info, "val_filenames.txt"), filenames)
+    print_filenames(os.path.join(folder_info, "test_filenames.txt"), filenames)
     print_filenames(os.path.join(folder_info, "train_filenames.txt"), images_copy)
     return filenames, images_copy
 
@@ -91,7 +91,7 @@ def adjust_read(folder, txt_file):
 
 def recover_filenames(folder:str)->list:
     # recover annotations for training and validation from file"
-    val_filenames = adjust_read(folder, "val_filenames.txt")
+    val_filenames = adjust_read(folder, "test_filenames.txt")
     train_filenames = adjust_read(folder, "train_filenames.txt")
 
     return val_filenames, train_filenames
@@ -100,7 +100,7 @@ def recover_filenames(folder:str)->list:
 def move_images(val_filenames:list, train_filenames:list, dest:str):
     # starting from lists of filename, move annotations in the right folders #
     train_dir = os.path.join(dest, 'train')
-    test_dir = os.path.join(dest, 'val')
+    test_dir = os.path.join(dest, 'test')
 
     #Creation folders
     if not os.path.exists(train_dir):

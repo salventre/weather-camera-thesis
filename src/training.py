@@ -5,7 +5,7 @@ import tensorflow as tf
 import argparse
 from utils import *
 
-DATASET_PATH = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '../..', 'Dataset'))
+NEW_DATASET_PATH = os.path.abspath('../weather-camera-thesis/data/dataset/train/')
 
 
 def init_parameter()->argparse.Namespace:   
@@ -16,7 +16,7 @@ def init_parameter()->argparse.Namespace:
     parser.add_argument("--logging_path", type=str, default='./data/logs', help="Path della cartella in cui salvare i logs del training")
     parser.add_argument("--tb_path", type=str, default='./data/tb_logs', help="Path della cartella in cui salvare i logs di Tensorboard")
     parser.add_argument("--learning_rate", type=float, default=0.00003, help="Learning_rate iniziale")
-    parser.add_argument("--epochs", type=int, default=70, help="Numero di epoche")
+    parser.add_argument("--epochs", type=int, default=30, help="Numero di epoche")
     parser.add_argument("--batch_size", type=int, default=32, help="Dimensione dei batches")
     parser.add_argument("--resume_training", action="store_true", default=False, help="riprendere un training iniziato precedentemente.")
     parser.add_argument("--model_path", type=str, default=None, help="Nome del modello da caricare nel caso in cui resume_training sia posto a True")
@@ -50,7 +50,7 @@ def train(args:argparse.Namespace):
     batch_size = 32
 
     train_ds = tf.keras.preprocessing.image_dataset_from_directory(
-        DATASET_PATH,
+        NEW_DATASET_PATH,
         validation_split=0.2,
         subset="training",
         label_mode= 'categorical',
@@ -59,7 +59,7 @@ def train(args:argparse.Namespace):
         batch_size=batch_size,)
 
     val_ds = tf.keras.preprocessing.image_dataset_from_directory(
-        DATASET_PATH,
+        NEW_DATASET_PATH,
         validation_split=0.2,
         subset="validation",
         label_mode= 'categorical',
