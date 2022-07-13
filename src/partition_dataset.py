@@ -6,12 +6,13 @@ import random
 from tqdm import tqdm
 import csv
 import pathlib
+#from read_csv_asnnotation import DRY_P, WET_P, SNOW_P, FOG_P
+
 
 HOME_PATH = os.path.abspath('../weather-camera-thesis/')
-CSV_PATH = os.path.join(HOME_PATH,'data/dataset_annotation.csv')
+CSV_PATH = os.path.join(os.path.abspath(os.path.join(pathlib.Path.cwd(), 'data')), "dataset_annotation.csv")
 CODE_PATH = str(pathlib.Path(__file__).parent.absolute())
 NEW_DATASET_PATH = os.path.abspath('../weather-camera-thesis/data/dataset/')
-
 
 
 def print_filenames(path:str, filenames:list)->None:
@@ -24,7 +25,9 @@ def check_ds_distribution(counter:dict)->bool:
     # check if the new created dataset respects the orginal dataset distribution #
     #limits = dry, wet, snow, fog --> 0.30, 0.29, 0.12, 0.29
 
-    limits = [0.30, 0.29, 0.12, 0.29]
+    #limits_imported = [DRY_P, WET_P, SNOW_P, FOG_P]
+    limits = [0.25, 0.25, 0.25, 0.25]
+
     tot = sum(list(counter.values()))
     for i, k in enumerate(list(counter.keys())):
         res = round(counter[k]/tot, 2)
@@ -56,7 +59,7 @@ def split(ratio, data, folder_info):
             counter[c] +=1
             images_copy.remove(filename)
         done = check_ds_distribution(counter)
-        print("TEST counter: ", counter)
+        #print("TEST counter: ", counter)
 
         # if distribution is respected, process remaining images-annotations for training set
         if done:
@@ -67,7 +70,7 @@ def split(ratio, data, folder_info):
                 counter[c] +=1
             # print(counter)
             done = done and check_ds_distribution(counter)
-            print("TRAIN counter: ", counter)
+            #print("TRAIN counter: ", counter)
     
     print("Split done!")
     print_filenames(os.path.join(folder_info, "test_filenames.txt"), filenames)
@@ -121,8 +124,9 @@ def move_images(val_filenames:list, train_filenames:list, dest:str):
     print("VAL")
     for f in tqdm(val_filenames):
         #shutil.copy(f[0], os.path.join(test_dir, f[1]))
+        print(f)
         img = f[0].rsplit('/', 1)
-        os.symlink(f[0], test_dir+"/"+f[1]+"/"+str(img[-1]))
+        os.symlink(f[0], train_dir+"/"+f[1]+"/"+str(img[-1]))
     
     print("TRAIN")
     for f in tqdm(train_filenames):
