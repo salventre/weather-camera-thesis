@@ -124,7 +124,6 @@ def move_images(val_filenames:list, train_filenames:list, dest:str):
     print("VAL")
     for f in tqdm(val_filenames):
         #shutil.copy(f[0], os.path.join(test_dir, f[1]))
-        print(f)
         img = f[0].rsplit('/', 1)
         os.symlink(f[0], train_dir+"/"+f[1]+"/"+str(img[-1]))
     
