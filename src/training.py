@@ -16,7 +16,7 @@ def init_parameter()->argparse.Namespace:
     parser.add_argument("--logging_path", type=str, default='./data/logs', help="Path della cartella in cui salvare i logs del training")
     parser.add_argument("--tb_path", type=str, default='./data/tb_logs', help="Path della cartella in cui salvare i logs di Tensorboard")
     parser.add_argument("--learning_rate", type=float, default=0.00003, help="Learning_rate iniziale")
-    parser.add_argument("--epochs", type=int, default=30, help="Numero di epoche")
+    parser.add_argument("--epochs", type=int, default=50, help="Numero di epoche")
     parser.add_argument("--batch_size", type=int, default=32, help="Dimensione dei batches")
     parser.add_argument("--resume_training", action="store_true", default=False, help="riprendere un training iniziato precedentemente.")
     parser.add_argument("--model_path", type=str, default=None, help="Nome del modello da caricare nel caso in cui resume_training sia posto a True")
@@ -76,10 +76,10 @@ def train(args:argparse.Namespace):
     train_ds = train_ds.prefetch(buffer_size=32)
     val_ds = val_ds.prefetch(buffer_size=32)
 
-    # callbacks --> validation LOSS <--
+    # callbacks --> val_loss, prima c'era "val_categorical_accuracy"
     filepath = 'model-epoch_{epoch:02d}.hdf5'
     checkpoint_cb = tf.keras.callbacks.ModelCheckpoint(os.path.join(args.checkpoint_path, filepath), save_weights_only=True, verbose=1, save_best_only=True)
-    early_stopping_cb = tf.keras.callbacks.EarlyStopping(patience=10,verbose=1,monitor='val_categorical_accuracy',mode='max')
+    early_stopping_cb = tf.keras.callbacks.EarlyStopping(patience=5,verbose=1,monitor='val_loss',mode='auto')
     history_logger_cb = tf.keras.callbacks.CSVLogger('./data/logs/training_log.csv', separator=",", append=True)
     tensorboad_cb = tf.keras.callbacks.TensorBoard(log_dir="./data/tb_logs", write_graph=False)
     callbacks = [checkpoint_cb,early_stopping_cb,history_logger_cb,tensorboad_cb]

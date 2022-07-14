@@ -23,9 +23,9 @@ img_augmentation = keras.Sequential(
 
 def build_model(freeze:bool=None)->tf.keras.Model:
 
-    inputs = layers.Input(shape=(IMG_SIZE, IMG_SIZE, 3))
-    x = img_augmentation(inputs)
-    base_model = MobileNetV2(INPUT_SHAPE, include_top=False, input_tensor=x, weights='imagenet') # 154 layers
+    #inputs = layers.Input(shape=(IMG_SIZE, IMG_SIZE, 3))
+    #x = img_augmentation(inputs)
+    base_model = MobileNetV2(INPUT_SHAPE, include_top=False, weights='imagenet') #input_tensor=x # 154 layers
     if freeze is not None:
         if freeze: base_model.trainable = False
         else:
@@ -33,7 +33,7 @@ def build_model(freeze:bool=None)->tf.keras.Model:
                 if not isinstance(layer, layers.BatchNormalization):
                     layer.trainable = True
     x = layers.GlobalAveragePooling2D()(base_model.output)
-    x = layers.Dropout(0.2)(x) #DA RIMUOVERE INIZIALMENTE
+    #x = layers.Dropout(0.2)(x) #DA RIMUOVERE INIZIALMENTE
     model = layers.Dense(N_CLASSES, 'softmax')(x)
     final_model = tf.keras.Model(inputs=base_model.input, outputs=model)
     #print(final_model.summary())

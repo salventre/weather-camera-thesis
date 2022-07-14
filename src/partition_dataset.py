@@ -6,7 +6,7 @@ import random
 from tqdm import tqdm
 import csv
 import pathlib
-#from read_csv_asnnotation import DRY_P, WET_P, SNOW_P, FOG_P
+from read_csv_annotation import DRY_P, WET_P, SNOW_P, FOG_P
 
 
 HOME_PATH = os.path.abspath('../weather-camera-thesis/')
@@ -25,13 +25,13 @@ def check_ds_distribution(counter:dict)->bool:
     # check if the new created dataset respects the orginal dataset distribution #
     #limits = dry, wet, snow, fog --> 0.30, 0.29, 0.12, 0.29
 
-    #limits_imported = [DRY_P, WET_P, SNOW_P, FOG_P]
-    limits = [0.25, 0.25, 0.25, 0.25]
+    limits_imported = [DRY_P, WET_P, SNOW_P, FOG_P]
+    #limits = [0.30, 0.29, 0.12, 0.29]
 
     tot = sum(list(counter.values()))
     for i, k in enumerate(list(counter.keys())):
         res = round(counter[k]/tot, 2)
-        if not (limits[i]-0.02<=res<=limits[i]+0.02):
+        if not (limits_imported[i]-0.02<=res<=limits_imported[i]+0.02):
             return False
     return True
 
