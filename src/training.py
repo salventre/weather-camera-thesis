@@ -86,8 +86,8 @@ def train(args:argparse.Namespace):
 
     hist = model.fit(train_ds, validation_data = val_ds, epochs=args.epochs, verbose = 1, callbacks=callbacks, shuffle = False) 
                         #),steps_per_epoch=int(np.ceil(TRAIN_DIM / args.batch_size)),validation_steps=int(np.ceil(VAL_DIM / args.batch_size)))
-
-    plot_hist2(hist)
+    
+    plot_hist_live(hist)
 
 if __name__ == "__main__":
     #tf.enable_eager_execution()

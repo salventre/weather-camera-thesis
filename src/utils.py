@@ -50,13 +50,24 @@ def plot_hist(csv_path:str, save:bool, imgs_path:str=None)->list:
 
         if save: return [path_loss_fig, path_acc_fig]
 
-def plot_hist2(hist):
+
+#dict_keys(['loss', 'categorical_accuracy', 'val_loss', 'val_categorical_accuracy'])
+
+def plot_hist_live(hist):
     plt.plot(hist.history["loss"])
     plt.plot(hist.history["val_loss"])
-    plt.title("model loss")
-    plt.ylabel("loss")
-    plt.xlabel("epoch")
-    plt.legend(["train", "validation"], loc="upper left")
+    plt.title("Model Loss")
+    plt.ylabel("Loss")
+    plt.xlabel("Epoch")
+    plt.legend(["Train", "Validation"], loc="upper left")
+    plt.show()
+
+    plt.plot(hist.history["categorical_accuracy"])
+    plt.plot(hist.history["val_categorical_accuracy"])
+    plt.title("Model C_Acc")
+    plt.ylabel("C_acc")
+    plt.xlabel("Epoch")
+    plt.legend(["Train", "Validation"], loc="upper left")
     plt.show()
 
 """

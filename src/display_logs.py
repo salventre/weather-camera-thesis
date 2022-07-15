@@ -27,6 +27,6 @@ def plot():
     if not os.path.exists(DOCS_PATH):
         os.makedirs(DOCS_PATH)
 
-    plot_hist(TRAIN_LOG_PATH, save=True, imgs_path=DOCS_PATH)
+    plot_hist(TRAIN_LOG_PATH, save=False, imgs_path=DOCS_PATH)
 
 plot()
