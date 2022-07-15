@@ -16,7 +16,7 @@ def init_parameter()->argparse.Namespace:
     parser.add_argument("--logging_path", type=str, default='./data/logs', help="Path della cartella in cui salvare i logs del training")
     parser.add_argument("--tb_path", type=str, default='./data/tb_logs', help="Path della cartella in cui salvare i logs di Tensorboard")
     parser.add_argument("--learning_rate", type=float, default=0.00003, help="Learning_rate iniziale")
-    parser.add_argument("--epochs", type=int, default=50, help="Numero di epoche")
+    parser.add_argument("--epochs", type=int, default=50, help="Numero di epoche") #50
     parser.add_argument("--batch_size", type=int, default=32, help="Dimensione dei batches")
     parser.add_argument("--resume_training", action="store_true", default=False, help="riprendere un training iniziato precedentemente.")
     parser.add_argument("--model_path", type=str, default=None, help="Nome del modello da caricare nel caso in cui resume_training sia posto a True")
@@ -87,7 +87,7 @@ def train(args:argparse.Namespace):
     hist = model.fit(train_ds, validation_data = val_ds, epochs=args.epochs, verbose = 1, callbacks=callbacks, shuffle = False) 
                         #),steps_per_epoch=int(np.ceil(TRAIN_DIM / args.batch_size)),validation_steps=int(np.ceil(VAL_DIM / args.batch_size)))
 
-    plot_hist(hist)
+    plot_hist2(hist)
 
 if __name__ == "__main__":
     #tf.enable_eager_execution()

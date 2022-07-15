@@ -50,11 +50,11 @@ def plot_hist(csv_path:str, save:bool, imgs_path:str=None)->list:
 
         if save: return [path_loss_fig, path_acc_fig]
 
-def plot_hist(hist):
-    plt.plot(hist.history["accuracy"])
-    plt.plot(hist.history["val_accuracy"])
-    plt.title("model accuracy")
-    plt.ylabel("accuracy")
+def plot_hist2(hist):
+    plt.plot(hist.history["loss"])
+    plt.plot(hist.history["val_loss"])
+    plt.title("model loss")
+    plt.ylabel("loss")
     plt.xlabel("epoch")
     plt.legend(["train", "validation"], loc="upper left")
     plt.show()
