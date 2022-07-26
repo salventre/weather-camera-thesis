@@ -13,7 +13,7 @@ SOURCEDATA_PATH = os.path.abspath(os.path.join(HOME_PATH,'Source'))
 for index in range(len(dataset_dict)):
     if not os.path.exists(SOURCEDATA_PATH):
         os.makedirs(SOURCEDATA_PATH)
-    print("### Tar Archive ", index, " of ", len(dataset_dict), " ###")
+    print("### Tar Archive ", index+1, " of ", len(dataset_dict), " ###")
     print(dataset_dict[index])
     print("Tar Archive URL: ", dataset_dict[index]["contentUrl"])
 
