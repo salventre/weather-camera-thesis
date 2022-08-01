@@ -121,7 +121,7 @@ def move_images(val_filenames:list, train_filenames:list, dest:str):
         os.makedirs(os.path.join(test_dir, "wet"))
         os.makedirs(os.path.join(test_dir, "snow"))
 
-    print("VAL")
+    print("TEST")
     for f in tqdm(val_filenames):
         #shutil.copy(f[0], os.path.join(test_dir, f[1]))
         img = f[0].rsplit('/', 1)
