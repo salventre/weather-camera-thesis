@@ -25,8 +25,8 @@ def train():
     patience= 5
     learning_rate = 0.00003
 
-    freeze_model = False
-    resume_training = True
+    freeze_model = True
+    resume_training = False
     model_path = os.path.abspath("../weather-camera-thesis/data/checkpoint/model-epoch_02.hdf5") #to check
 
     # model
@@ -76,10 +76,9 @@ def train():
         seed=42
     )'''
 
-    class_weights = dict(zip(np.unique(valid_generator.classes), class_weight.compute_class_weight('balanced', np.unique(valid_generator.classes), 
-                valid_generator.classes))) 
+    class_weights = dict(zip(np.unique(valid_generator.classes), class_weight.compute_class_weight(class_weight='balanced', classes=np.unique(valid_generator.classes), y=valid_generator.classes))) 
     print("Class Weights: ", class_weights)
-
+    
     #resize images
     #train_ds = train_ds.map(lambda image, label: (tf.image.resize(image, CLASSIFICATOR_INPUT_SIZE), label))
     #val_ds = val_ds.map(lambda image, label: (tf.image.resize(image, CLASSIFICATOR_INPUT_SIZE), label))
