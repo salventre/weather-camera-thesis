@@ -1,6 +1,5 @@
 from copy import deepcopy
 import os
-import shutil
 import math
 import random
 from tqdm import tqdm
@@ -36,7 +35,7 @@ def check_ds_distribution(counter:dict)->bool:
 
 
 def split(ratio, data, folder_info):
-    print("Numero di annotation all'interno del csv: ", len(data))
+    print("Annotations of .csv: ", len(data))
     num_images = len(data)
     num_test_images = math.ceil(ratio*num_images)
     print("Train: {}, Test: {}".format(num_images-num_test_images, num_test_images))
@@ -144,10 +143,11 @@ if __name__ == '__main__':
     if not os.path.exists(folder):
         os.makedirs(folder)
         ratio = 0.1
-        print("Create partition with split ratio {}".format(ratio))
+        print("Create new Partition Dataset with split ratio: {}".format(ratio))
         val_filenames, train_filenames = split(ratio, data, folder)
 
     else:
+        print("Found an existing Partition Info")
         val_filenames, train_filenames = recover_filenames(folder)
         print("Split recovered !")
 
