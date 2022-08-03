@@ -1,7 +1,7 @@
 import csv
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'    # Suppress TensorFlow logging (1)
-from utils import plot_hist
+from plot_hist import plot_hist
 
 '''
 def adjsut_csv():

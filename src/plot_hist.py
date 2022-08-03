@@ -69,17 +69,3 @@ def plot_hist_live(hist):
     plt.xlabel("Epoch")
     plt.legend(["Train", "Validation"], loc="upper left")
     plt.show()
-
-"""
-## Run inference on new data
-
-Note that data augmentation and dropout are inactive at inference time.
-"""
-def inference_data(model, img_path, ):
-    img = keras.preprocessing.image.load_img(img_path, target_size=image_size)
-    img_array = keras.preprocessing.image.img_to_array(img)
-    img_array = tf.expand_dims(img_array, 0)  # Create batch axis
-
-    predictions = model.predict(img_array)
-    score = predictions[0]
-    print(score)

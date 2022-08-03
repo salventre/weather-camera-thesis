@@ -14,7 +14,6 @@ CSV_PATH = os.path.join(os.path.abspath(os.path.join(pathlib.Path.cwd(), 'data')
 CODE_PATH = str(pathlib.Path(__file__).parent.absolute())
 NEW_DATASET_PATH = os.path.abspath('../weather-camera-thesis/data/dataset/')
 
-
 def print_filenames(path:str, filenames:list)->None:
     with open(path,"w") as f:
         for item in filenames:

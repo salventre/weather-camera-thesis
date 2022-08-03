@@ -6,17 +6,20 @@ sys.path.insert(0, os.path.abspath("../weather-camera-thesis/src"))
 from plot_hist import plot_hist
 
 TOKEN="5528518099:AAHhPoPkCxt4-Kf6W_ed7oqkq52M1OQ4M54" #to check
-CSV_PATH = os.path.abspath('../weather-camera-thesis/data/logs/training_log.csv')
-IMGS_PATH = os.path.abspath('../weather-camera-thesis/data/doc')
+
+n_experiment = "1_experiment" #specify the expriment to visualize
+CSV_PATH_COLAB = "/content/drive/Shareddrives/WeatherCamera/Project Saves/{}/logs/training_log.csv".format(n_experiment)
+IMGS_PATH_COLAB = "/content/drive/Shareddrives/WeatherCamera/Project Saves/{}/doc".format(n_experiment)
 
 def start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
 
 def stats(update, context):
     try:
-        df = pd.read_csv(CSV_PATH)
+        df = pd.read_csv(CSV_PATH_COLAB)
 
         msg = ""
+        msg += n_experiment + "\n"
         msg += 'Epoch: ' + str(len(df)) + "\n\n"
         msg += "Best training loss: " + str(round(min(df['loss']), 3)) + "\n"
         msg += "Best validation loss: " + str(round(min(df['val_loss']), 3)) + "\n\n"
@@ -33,7 +36,7 @@ def stats(update, context):
 
 def update(update, context):
     try:
-        path_loss_fig, path_acc_fig = plot_hist(CSV_PATH, save=True, imgs_path=IMGS_PATH)
+        path_loss_fig, path_acc_fig = plot_hist(CSV_PATH_COLAB, save=True, imgs_path=IMGS_PATH_COLAB)
         context.bot.sendPhoto(chat_id=update.effective_chat.id, photo=open(path_loss_fig, 'rb'), caption="Loss")
         context.bot.sendPhoto(chat_id=update.effective_chat.id, photo=open(path_acc_fig, 'rb'), caption="accuracy")
     except:
