@@ -27,12 +27,13 @@ FOG_P= counter["fog"]/len_data
 
 #limiti = dry, wet, snow, fog --> 0.30, 0.29, 0.12, 0.29
 
-print("Tot Images: ", len_data)
+print("Total Images: ", len_data)
 print(counter)
-print("Verifica somma: ", counter["dry"] + counter["wet"] + counter["snow"] + counter["fog"], "\n")
-print("Calcolo percentuale-> DRY: ", DRY_P)
-print("Calcolo percentuale-> WET: ", WET_P)
-print("Calcolo percentuale-> SNOW: ", SNOW_P)
-print("Calcolo percentuale-> FOG: ", FOG_P)
+print("Check Sum: ", counter["dry"] + counter["wet"] + counter["snow"] + counter["fog"], "\n")
+print("Percentage calculation:")
+print("DRY: ", round(DRY_P, 4)*100, "%")
+print("WET: ", round(WET_P, 4)*100, "%")
+print("SNOW: ", round(SNOW_P, 4)*100, "%")
+print("FOG: ", round(FOG_P, 4)*100, "%")
 
-print("Verifica percentuale: ", DRY_P + WET_P + SNOW_P + FOG_P)
+print("Check Percentage: ", (DRY_P + WET_P + SNOW_P + FOG_P)*100, "%")
