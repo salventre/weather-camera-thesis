@@ -2,7 +2,7 @@ from telegram.ext import Updater, CommandHandler
 import pandas as pd
 import sys
 import os
-sys.path.insert(0, os.path.abspath("../weather-camera-thesis/src"))
+sys.path.insert(0, os.path.abspath("/home/weather-camera-thesis/src"))
 from plot_hist import plot_hist
 
 TOKEN="5528518099:AAHhPoPkCxt4-Kf6W_ed7oqkq52M1OQ4M54" #to check
