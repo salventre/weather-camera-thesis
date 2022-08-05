@@ -21,13 +21,13 @@ def train():
     CLASSIFICATOR_INPUT_SIZE = (224,224)
 
     batch_size = 32
-    epochs = 10
+    epochs = 5
     patience= 5
     learning_rate = 0.00003
 
-    freeze_model = True
-    resume_training = False
-    model_path = os.path.abspath("../weather-camera-thesis/data/checkpoint/model-epoch_02.hdf5") #to check
+    freeze_model = False
+    resume_training = True
+    model_path = os.path.abspath("/home/salvatore/Documenti/Weather Camera/weather-camera-thesis/data/checkpoint/model-epoch_03.hdf5") #to check
 
     # model
     model = build_model(freeze_model)

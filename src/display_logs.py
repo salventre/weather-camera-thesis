@@ -20,7 +20,7 @@ def adjsut_csv():
 '''
 
 def plot():
-    TRAIN_LOG_PATH = os.path.abspath('../weather-camera-thesis/data/logs/training_log.csv')
+    TRAIN_LOG_PATH = os.path.abspath('../weather-camera-thesis/data/log/training_log.csv')
     DOCS_PATH = os.path.abspath('../weather-camera-thesis/data/doc/')
 
 
