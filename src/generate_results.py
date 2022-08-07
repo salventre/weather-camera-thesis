@@ -82,9 +82,9 @@ def inference_data(model_path):
     with open(OUTPUT_PATH,"w") as f:
         f.write("CONFUSION MATRIX\n"+matrix.to_string())
         f.write("\n\nACCURACY:\n"+str(acc))
-        f.write("\nPRECISION:\n"+str(round(prec_score, 3)))
-        f.write("\nRECALL:\n"+str(rec_score))
-        f.write("\nF1-SCORE:\n"+str(round(f1score, 3)))
+        f.write("\n\nPRECISION:\n"+str(round(prec_score, 3)))
+        f.write("\n\nRECALL:\n"+str(rec_score))
+        f.write("\n\nF1-SCORE:\n"+str(round(f1score, 3)))
 
 
 
