@@ -2,6 +2,7 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'    # Suppress TensorFlow logging (1)
 from model import build_model
 import tensorflow as tf
+import argparse
 from plot_hist import *
 from sklearn.utils import class_weight
 import numpy as np
@@ -9,7 +10,16 @@ from keras.preprocessing.image import ImageDataGenerator
 
 NEW_DATASET_PATH = os.path.abspath('../weather-camera-thesis/data/dataset/train/')
 
-def train():
+def init_parameter()->argparse.Namespace:   
+    parser = argparse.ArgumentParser(description='Classifier Training Script')
+    parser.add_argument("--train_path", type=str, default=NEW_DATASET_PATH, help="Path della cartella contenente i file di training")
+    parser.add_argument("--learning_rate", type=float, default=0.00003, help="Learning_rate iniziale")
+    parser.add_argument("--epochs", type=int, default=10, help="Numero di epoche")
+    parser.add_argument("--batch_size", type=int, default=32, help="Dimensione dei batches")
+    args = parser.parse_args()
+    return args
+
+def train(args:argparse.Namespace):
     if not os.path.exists('./data/checkpoint'): os.makedirs('./data/checkpoint')
     if not os.path.exists('./data/logs'): os.makedirs('./data/logs')
     if not os.path.exists('./data/tb_logs'): os.makedirs('./data/tb_logs')
@@ -17,17 +27,20 @@ def train():
     
     TRAIN_DIM = 7917 #1454724
     VAL_DIM = 1977  #363680
-    print("TRAIN Dim: ", TRAIN_DIM, " , VAL Dim: ", VAL_DIM)
     CLASSIFICATOR_INPUT_SIZE = (224,224)
 
-    batch_size = 32
-    epochs = 5
-    patience= 5
-    learning_rate = 0.00003
+    batch_size = args.batch_size
+    epochs = args.epochs
+    patience= 8
+    learning_rate = args.learning_rate
 
     freeze_model = False
-    resume_training = True
-    model_path = os.path.abspath("/home/salvatore/Documenti/Weather Camera/weather-camera-thesis/data/checkpoint/model-epoch_03.hdf5") #to check
+    resume_training = False
+    model_path = os.path.abspath("/") #to check
+    print("--- Training Parameters: ---")
+    print("TRAIN Dim: ", TRAIN_DIM, ", VAL Dim: ", VAL_DIM)
+    print("Batch Size: ", batch_size, " - Epochs", epochs, " - Learning Rate: ", learning_rate)
+    print("Patience: ", patience, " - Freeze Model: ", freeze_model, " - Resume Training: ", resume_training,"\n")
 
     # model
     model = build_model(freeze_model)
@@ -95,8 +108,9 @@ def train():
 
     hist = model.fit(train_generator, validation_data = valid_generator, epochs=epochs, verbose = 1, callbacks=callbacks, shuffle = False, class_weight=class_weights,
                 steps_per_epoch=int(np.ceil(TRAIN_DIM / batch_size)),validation_steps=int(np.ceil(VAL_DIM / batch_size)))
-    
-    plot_hist_live(hist)
+
 
 if __name__ == "__main__":
-    train()
+
+    args = init_parameter()
+    train(args)
