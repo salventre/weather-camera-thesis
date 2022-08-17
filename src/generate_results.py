@@ -5,7 +5,7 @@ from model import build_model
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'    # Suppress TensorFlow logging (1)
 import tensorflow as tf
 import numpy as np
-from sklearn.metrics import accuracy_score, confusion_matrix, f1_score, recall_score, precision_score
+from sklearn.metrics import accuracy_score, confusion_matrix, f1_score, recall_score, precision_score, balanced_accuracy_score
 from sklearn.metrics import ConfusionMatrixDisplay
 import matplotlib.pyplot as plt
 from classmap import category_index_classifier
@@ -74,11 +74,13 @@ if __name__ == "__main__":
     
     print("Computing Metrics...")
     acc = accuracy_score(y_true, y_pred)
+    bal_accuracy = balanced_accuracy_score(y_true, y_pred)
     rec_score = recall_score(y_true, y_pred, average='weighted')
     prec_score = precision_score(y_true, y_pred, average='weighted')
     f1score = f1_score(y_true, y_pred, average='weighted')
     print("Computing Metrics...DONE")
     print("Accuracy Score: ", round(acc, 4))
+    print("Balanced Accuracy Score: ", round(bal_accuracy, 4))
     print("Recall Score: ", round(rec_score, 4))
     print("Precision Score: ", round(prec_score, 4))
     print("F1-Score: ", round(f1score, 4))
@@ -86,6 +88,7 @@ if __name__ == "__main__":
     with open(args.output_path,"w") as f:
         f.write("CONFUSION MATRIX\n"+matrix.to_string())
         f.write("\n\nACCURACY:\n"+str(round(acc, 4)))
+        f.write("\n\nBALANCED ACCURACY:\n"+str(round(bal_accuracy, 4)))
         f.write("\n\nPRECISION:\n"+str(round(prec_score, 4)))
         f.write("\n\nRECALL:\n"+str(round(rec_score, 4)))
         f.write("\n\nF1-SCORE:\n"+str(round(f1score, 4)))
