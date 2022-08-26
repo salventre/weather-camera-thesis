@@ -12,8 +12,6 @@ from classmap import category_map_classifier
 
 IMG_HEIGHT = 224
 IMG_WIDTH = 224
-CLASSIFICATOR_INPUT_SIZE = (224,224)
-CLASSES_LIST = [0, 1, 2, 3]
 NUM_CLASSES = 4
 
 MODEL_FOLDER = os.path.abspath('./data/checkpoint/')
@@ -104,13 +102,13 @@ if __name__ == "__main__":
 
     input_video_file_path = os.path.abspath(os.path.join(input_video_folder, video_title))
  
-    frame_window_size = 100
+    frame_window_size = 100 #number of frames
     output_video_file_path = f'{output_directory}/{video_title}-Output-WSize-{frame_window_size}.mp4'
     print("\nPredict Live Video...")
     predict_on_live_video(model, input_video_file_path, output_video_file_path, frame_window_size)
     print("Predict Live Video...DONE - Video ready !\n")
 
     # To get a single prediction for the entire video
-    predictions_frames_count = 100
+    predictions_frames_count = 100 #number of frames
     print("Single Prediction for entire video:")
     make_average_predictions(model, input_video_file_path, predictions_frames_count)
