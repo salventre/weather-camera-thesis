@@ -1,8 +1,10 @@
 from collections import deque
-from lib2to3.refactor import MultiprocessingUnsupported
 import os
 import cv2
 import sys
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'    # Suppress TensorFlow logging (1)
+import tensorflow as tf
+import keras
 import numpy as np
 sys.path.insert(0, os.path.abspath("/home/salvatore/Documenti/Weather Camera/weather-camera-thesis/src"))
 from model import build_model
@@ -10,6 +12,7 @@ from classmap import category_map_classifier
 
 IMG_HEIGHT = 224
 IMG_WIDTH = 224
+CLASSIFICATOR_INPUT_SIZE = (224,224)
 CLASSES_LIST = [0, 1, 2, 3]
 NUM_CLASSES = 4
 
@@ -36,9 +39,11 @@ def predict_on_live_video(model, video_file_path, output_file_path, window_size)
             break
 
         resized_frame = cv2.resize(frame, (IMG_HEIGHT, IMG_WIDTH))
-        normalized_frame = resized_frame / 255
 
-        predicted_labels_probabilities = model.predict(np.expand_dims(normalized_frame, axis = 0))[0]
+        img_array = keras.preprocessing.image.img_to_array(resized_frame)
+        img_array = tf.expand_dims(img_array, 0)  # Create batch axis
+  
+        predicted_labels_probabilities = model.predict(img_array)
         predicted_labels_probabilities_deque.append(predicted_labels_probabilities)
 
         if len(predicted_labels_probabilities_deque) == window_size:
@@ -67,8 +72,10 @@ def make_average_predictions(model, video_file_path, predictions_frames_count):
         video_reader.set(cv2.CAP_PROP_POS_FRAMES, frame_counter * skip_frames_window)
         _ , frame = video_reader.read() 
         resized_frame = cv2.resize(frame, (IMG_HEIGHT, IMG_WIDTH))   
-        normalized_frame = resized_frame / 255
-        predicted_labels_probabilities = model.predict(np.expand_dims(normalized_frame, axis = 0))[0]
+        img_array = keras.preprocessing.image.img_to_array(resized_frame)
+        img_array = tf.expand_dims(img_array, 0)  # Create batch axis
+  
+        predicted_labels_probabilities = model.predict(img_array)
         predicted_labels_probabilities_np[frame_counter] = predicted_labels_probabilities
 
     predicted_labels_probabilities_averaged = predicted_labels_probabilities_np.mean(axis = 0)
@@ -93,14 +100,14 @@ if __name__ == "__main__":
     os.makedirs(output_directory, exist_ok = True)
 
     input_video_folder = os.path.abspath("./utils/video-classification/input_video")
-    video_title = 'test1.mp4'
+    video_title = 'Dry3.mp4'
 
     input_video_file_path = os.path.abspath(os.path.join(input_video_folder, video_title))
  
     frame_window_size = 100
     output_video_file_path = f'{output_directory}/{video_title}-Output-WSize-{frame_window_size}.mp4'
     print("\nPredict Live Video...")
-    #predict_on_live_video(model, input_video_file_path, output_video_file_path, frame_window_size)
+    predict_on_live_video(model, input_video_file_path, output_video_file_path, frame_window_size)
     print("Predict Live Video...DONE - Video ready !\n")
 
     # To get a single prediction for the entire video
