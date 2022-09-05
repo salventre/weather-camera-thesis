@@ -25,8 +25,8 @@ def train(args:argparse.Namespace):
     if not os.path.exists('./data/tb_logs'): os.makedirs('./data/tb_logs')
     if not os.path.exists('./data/doc'): os.makedirs('./data/doc')
     
-    TRAIN_DIM = 7917 #1454724
-    VAL_DIM = 1977  #363680
+    TRAIN_DIM = 1454724
+    VAL_DIM = 363680
     CLASSIFICATOR_INPUT_SIZE = (224,224)
 
     batch_size = args.batch_size
@@ -89,9 +89,10 @@ def train(args:argparse.Namespace):
         seed=42
     )'''
 
-    class_weights = dict(zip(np.unique(valid_generator.classes), class_weight.compute_class_weight(class_weight='balanced', classes=np.unique(valid_generator.classes), y=valid_generator.classes))) 
+    class_weights = dict(zip(np.unique(train_generator.classes), class_weight.compute_class_weight(class_weight='balanced', classes=np.unique(train_generator.classes), y=train_generator.classes))) 
     print("Class Weights: ", class_weights)
-    
+    #Class Weights:  {0: 0.6883704735376045, 1: 2.715659340659341, 2: 1.3691135734072022, 3: 0.6902932960893855}
+
     #resize images
     #train_ds = train_ds.map(lambda image, label: (tf.image.resize(image, CLASSIFICATOR_INPUT_SIZE), label))
     #val_ds = val_ds.map(lambda image, label: (tf.image.resize(image, CLASSIFICATOR_INPUT_SIZE), label))

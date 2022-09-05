@@ -6,8 +6,10 @@ sys.path.insert(0, os.path.abspath("../weather-camera-thesis/src"))
 from plot_hist import plot_hist
 
 TOKEN="5528518099:AAHhPoPkCxt4-Kf6W_ed7oqkq52M1OQ4M54" #to check
-CSV_PATH = os.path.abspath('../weather-camera-thesis/data/logs/training_log.csv')
-IMGS_PATH = os.path.abspath('../weather-camera-thesis/data/doc')
+
+n_experiment = "11_experiment" #specify the expriment to visualize
+CSV_PATH = "'/user/sventre/Weather_Camera/Project Saves/{}/logs/training_log.csv".format(n_experiment)
+IMGS_PATH = "'/user/sventre/Weather_Camera/Project Saves/{}/doc".format(n_experiment)
 
 def start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
@@ -17,6 +19,7 @@ def stats(update, context):
         df = pd.read_csv(CSV_PATH)
 
         msg = ""
+        msg += n_experiment + "\n"
         msg += 'Epoch: ' + str(len(df)) + "\n\n"
         msg += "Best training loss: " + str(round(min(df['loss']), 3)) + "\n"
         msg += "Best validation loss: " + str(round(min(df['val_loss']), 3)) + "\n\n"

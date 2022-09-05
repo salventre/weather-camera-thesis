@@ -15,7 +15,7 @@ IMG_WIDTH = 224
 NUM_CLASSES = 4
 
 MODEL_FOLDER = os.path.abspath('./data/checkpoint/')
-model_name = "test_model.hdf5" #modify to choose the model
+model_name = "model-epoch_06.hdf5" #modify to choose the model
 
 MODEL_PATH = os.path.abspath(os.path.join(MODEL_FOLDER, model_name))
 
@@ -49,7 +49,7 @@ def predict_on_live_video(model, video_file_path, output_file_path, window_size)
             predicted_labels_probabilities_averaged = predicted_labels_probabilities_np.mean(axis = 0)
             predicted_label = np.argmax(predicted_labels_probabilities_averaged)
             predicted_class_name = category_map_classifier[predicted_label]
-            cv2.putText(frame, predicted_class_name, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            cv2.putText(frame, predicted_class_name, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
         video_writer.write(frame)
  
@@ -98,7 +98,7 @@ if __name__ == "__main__":
     os.makedirs(output_directory, exist_ok = True)
 
     input_video_folder = os.path.abspath("./utils/video-classification/input_video")
-    video_title = 'Dry3.mp4'
+    video_title = 'Dry1.mp4'
 
     input_video_file_path = os.path.abspath(os.path.join(input_video_folder, video_title))
  
