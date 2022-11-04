@@ -5,7 +5,7 @@ import os
 sys.path.insert(0, os.path.abspath("/home/weather-camera-thesis/src"))
 from plot_hist import plot_hist
 
-TOKEN="5528518099:AAHhPoPkCxt4-Kf6W_ed7oqkq52M1OQ4M54" #to check
+TOKEN="?" #to check
 
 n_experiment = "1_experiment" #specify the expriment to visualize
 CSV_PATH_COLAB = "/content/drive/Shareddrives/WeatherCamera/Project Saves/{}/logs/training_log.csv".format(n_experiment)
